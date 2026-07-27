@@ -1,20 +1,11 @@
-import react from "react";
+import AppRouter from "./routes/AppRouter";
 
-const App=()=>{
-
-
-return(
-
-<>
-
-<h1> Enterprise Admin Dashboard</h1>
-
-</>
-
-)
-
-
-}
-
+const App = () => {
+  return (
+    <div>
+      <AppRouter />
+    </div>
+  );
+};
 
 export default App;
