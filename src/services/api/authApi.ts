@@ -26,11 +26,3 @@ export const authApi = apiSlice.injectEndpoints({
 });
 
 export const { useLoginMutation } = authApi;
-
-// After the login API works, the typical enterprise sequence is:
-
-// ✅ Save the JWT access token.
-// ✅ Update the Redux auth state (isAuthenticated, user).
-// ✅ Redirect the user to the dashboard.
-// ✅ Handle login errors with user-friendly messages.
-// ✅ Add logout and protected routes.

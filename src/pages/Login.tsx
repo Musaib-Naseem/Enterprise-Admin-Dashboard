@@ -6,6 +6,7 @@ import { loginSuccess } from "../features/auth/authSlice";
 import { useAppDispatch } from "../hooks";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -32,10 +33,34 @@ const Login = () => {
 
       console.log(response);
       dispatch(loginSuccess(response));
-      toast.success("Login Successful");
+
       navigate("/dashboard");
+      toast.success("Login Successful");
     } catch (error) {
-      console.log(error);
+      const err = error as FetchBaseQueryError;
+
+      if ("status" in err) {
+        switch (err.status) {
+          case 400:
+            toast.error("Invalid username or password");
+            break;
+
+          case 401:
+            toast.error("Unauhorised User");
+            break;
+
+          case 404:
+            toast.error("User not found");
+            break;
+
+          case 500:
+            toast.error("Server error. Please try again later.");
+            break;
+
+          default:
+            toast.error("Login failed");
+        }
+      }
     }
   };
 

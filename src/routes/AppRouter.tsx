@@ -8,6 +8,7 @@ import Products from "../pages/Products";
 import Setting from "../pages/Setting";
 import Dashboard from "../pages/Dashboard";
 import Users from "../pages/Users";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 const AppRouter = () => {
   return (
@@ -18,7 +19,14 @@ const AppRouter = () => {
         <Route path="/login" element={<Login />} />
 
         <Route element={<DashboardLayout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoutes>
+                <Dashboard />
+              </ProtectedRoutes>
+            }
+          />
           <Route path="/users" element={<Users />} />
           <Route path="/products" element={<Products />} />
           <Route path="/orders" element={<Orders />} />

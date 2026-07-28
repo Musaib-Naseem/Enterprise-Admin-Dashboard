@@ -1,3 +1,5 @@
+import Logout from "../../pages/Logout";
+
 const Header = () => {
   return (
     <div className="h-16 bg-green-300">
@@ -9,6 +11,7 @@ const Header = () => {
         <div> Notification </div>
 
         <div> Profile </div>
+        <Logout />
       </div>
     </div>
   );
