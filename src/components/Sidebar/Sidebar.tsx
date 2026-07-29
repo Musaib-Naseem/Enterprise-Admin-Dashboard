@@ -1,17 +1,35 @@
 import { NavLink } from "react-router-dom";
+import { useAppSelector } from "../../hooks";
+import { navigation } from "../../config/navigation";
 
 const Sidebar = () => {
+  const user = useAppSelector((state) => state.auth.user);
+
+  const sidebarItems = navigation.filter((item) => {
+    return user?.role && item.roles.includes(user.role);
+  });
+
   return (
     <div className=" ">
-      <aside className="w-64 bg-red-200 h-screen p-4">
-        {/* <h1 className="text-lg font-bold"> Sidebar </h1> */}
-
+      {/* <aside className="w-64 bg-red-200 h-screen p-4">
         <nav className="flex flex-col">
           <NavLink to="/dashboard"> Dashboard </NavLink>
           <NavLink to="/orders"> Orders </NavLink>
           <NavLink to="/products"> Product </NavLink>
           <NavLink to="/setting"> Setting </NavLink>
           <NavLink to="/users"> User </NavLink>
+        </nav>
+      </aside> */}
+
+      <aside className="w-64 bg-red-200 h-screen p-4">
+        <nav className="flex flex-col">
+          {sidebarItems.map((item) => {
+            return (
+              <>
+                <NavLink to={item.path}> {item.title} </NavLink>
+              </>
+            );
+          })}
         </nav>
       </aside>
     </div>

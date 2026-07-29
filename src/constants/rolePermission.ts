@@ -1,7 +1,10 @@
-import { Permission } from "./Permission";
+import { Permission, type PERMISSION } from "./Permission";
 import { ROLES } from "./roles";
 
-export const ROLE_PERMISSIONS = {
+export const ROLE_PERMISSIONS: Record<
+  (typeof ROLES)[keyof typeof ROLES],
+  PERMISSION[]
+> = {
   [ROLES.ADMIN]: [
     Permission.READ_USERS,
     Permission.CREATE_USERS,
