@@ -5,6 +5,7 @@ interface User {
   id: number;
   username: string;
   email: string;
+  role: "admin" | "manager" | "user";
 }
 
 export interface LoginResponse {
@@ -13,6 +14,7 @@ export interface LoginResponse {
   id: number;
   username: string;
   email: string;
+  role: "admin" | "manager" | "user";
 }
 
 interface AuthState {
@@ -35,11 +37,7 @@ const authSlice = createSlice({
   reducers: {
     loginSuccess: (state, action: PayloadAction<LoginResponse>) => {
       state.isAuthenticated = true;
-      state.user = {
-        id: action.payload.id,
-        username: action.payload.username,
-        email: action.payload.email,
-      };
+      state.user = action.payload;
       state.accessToken = action.payload.accessToken;
     },
 

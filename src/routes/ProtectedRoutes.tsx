@@ -1,11 +1,7 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useAppSelector } from "../hooks";
 
-interface protectedRouteProps {
-  children: React.ReactNode;
-}
-
-const ProtectedRoutes = ({ children }: protectedRouteProps) => {
+const ProtectedRoutes = () => {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   console.log("ProtectedRoutes:", isAuthenticated);
@@ -17,7 +13,7 @@ const ProtectedRoutes = ({ children }: protectedRouteProps) => {
 
   console.log("Rendering protected page");
 
-  return <>{children}</>;
+  return <Outlet />;
 };
 
 export default ProtectedRoutes;

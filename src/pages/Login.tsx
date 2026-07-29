@@ -7,6 +7,7 @@ import { useAppDispatch } from "../hooks";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import type { LoginResponse } from "../features/auth/authSlice";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -28,11 +29,17 @@ const Login = () => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const response = await login(data).unwrap();
+
+      const userOne: LoginResponse = {
+        ...response,
+        role: response.username == "emilys" ? "admin" : "user",
+      };
+
       localStorage.setItem("accessToken", response.accessToken);
       localStorage.setItem("refreshToken", response.refreshToken);
 
-      console.log(response);
-      dispatch(loginSuccess(response));
+      console.log(userOne);
+      dispatch(loginSuccess(userOne));
 
       navigate("/dashboard");
       toast.success("Login Successful");

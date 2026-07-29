@@ -6,6 +6,7 @@ interface LoginRequest {
 }
 
 interface LoginResponse {
+  role: "admin" | "manager" | "user";
   accessToken: string;
   refreshToken: string;
   id: number;

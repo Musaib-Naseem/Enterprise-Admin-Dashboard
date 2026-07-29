@@ -9,6 +9,9 @@ import Setting from "../pages/Setting";
 import Dashboard from "../pages/Dashboard";
 import Users from "../pages/Users";
 import ProtectedRoutes from "./ProtectedRoutes";
+import Unauthorised from "../pages/Unauthorised";
+import RoleProtectedRoutes from "./RoleProtectedRoutes";
+import { ROLES } from "../constants/roles";
 
 const AppRouter = () => {
   return (
@@ -17,20 +20,24 @@ const AppRouter = () => {
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
         <Route path="/login" element={<Login />} />
+        <Route path="/unauthorised" element={<Unauthorised />} />
 
-        <Route element={<DashboardLayout />}>
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoutes>
-                <Dashboard />
-              </ProtectedRoutes>
-            }
-          />
-          <Route path="/users" element={<Users />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/setting" element={<Setting />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route element={<DashboardLayout />}>
+            <Route
+              element={<RoleProtectedRoutes allowedRoles={[ROLES.ADMIN]} />}
+            >
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/users" element={<Users />} />
+            </Route>
+            <Route
+              element={<RoleProtectedRoutes allowedRoles={[ROLES.MANAGER]} />}
+            >
+              <Route path="/products" element={<Products />} />
+              <Route path="/orders" element={<Orders />} />
+              <Route path="/setting" element={<Setting />} />
+            </Route>
+          </Route>
         </Route>
 
         <Route path="*" element={<NotFound />} />
