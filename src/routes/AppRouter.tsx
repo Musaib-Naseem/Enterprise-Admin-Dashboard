@@ -24,14 +24,14 @@ const AppRouter = () => {
 
         <Route element={<ProtectedRoutes />}>
           <Route element={<DashboardLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route
               element={<RoleProtectedRoutes allowedRoles={[ROLES.ADMIN]} />}
             >
-              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/users" element={<Users />} />
             </Route>
             <Route
-              element={<RoleProtectedRoutes allowedRoles={[ROLES.MANAGER]} />}
+              element={<RoleProtectedRoutes allowedRoles={[ROLES.USER]} />}
             >
               <Route path="/products" element={<Products />} />
               <Route path="/orders" element={<Orders />} />

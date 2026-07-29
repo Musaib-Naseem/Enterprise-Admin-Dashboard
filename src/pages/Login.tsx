@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import type { LoginResponse } from "../features/auth/authSlice";
+import { USER_ROLES } from "../constants/USER_ROLES";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,9 +31,10 @@ const Login = () => {
     try {
       const response = await login(data).unwrap();
 
+      const role = USER_ROLES[response.username] ?? "user";
       const userOne: LoginResponse = {
         ...response,
-        role: response.username == "emilys" ? "admin" : "user",
+        role,
       };
 
       localStorage.setItem("accessToken", response.accessToken);
