@@ -39,8 +39,6 @@ const Login = () => {
 
       localStorage.setItem("accessToken", response.accessToken);
       localStorage.setItem("refreshToken", response.refreshToken);
-
-      console.log(userOne);
       dispatch(loginSuccess(userOne));
 
       navigate("/dashboard");
