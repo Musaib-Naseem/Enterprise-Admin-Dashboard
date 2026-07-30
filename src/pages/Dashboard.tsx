@@ -2,6 +2,12 @@ import { ROLES } from "../constants/roles";
 import { useAppSelector } from "../hooks";
 import { Permission } from "../constants/Permission";
 import { hasPermission } from "../utils/hasPermission";
+import Button from "../components/ui/Button/Button";
+import Input from "../components/ui/Input/Input";
+import Card from "../components/ui/Card/Card";
+import Badge from "../components/ui/Badge/Badge";
+import Spinnner from "../components/ui/Spinner/Spinner";
+import Modal from "../components/ui/Modal/Modal";
 
 const Dashboard = () => {
   const data = useAppSelector((state) => state.auth.isAuthenticated);
@@ -10,9 +16,18 @@ const Dashboard = () => {
 
   const canDelete = user && hasPermission(user.role, Permission.READ_PRODUCTS);
 
+  const showDeleteModal = false;
+
   return (
     <>
       <h1> Dashboard </h1>
+
+      <Button variant="danger"> Cancel </Button>
+      <Input label="Email" placeholder="Enter Email" />
+      <Card>Hello World</Card>
+      <Badge text="musaib" />
+      <Spinnner />
+      <Modal open={showDeleteModal}>My Open Modal</Modal>
 
       {user?.role === ROLES.ADMIN && <h2> I am User </h2>}
 
