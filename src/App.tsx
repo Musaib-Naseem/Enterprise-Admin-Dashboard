@@ -10,8 +10,6 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log("App mounted");
-
     let token = getAccessToken();
     console.log(token);
 
