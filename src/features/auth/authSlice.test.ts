@@ -1,4 +1,5 @@
 import { describe, expect, test } from "vitest";
+
 import authReducer, {
   loginSuccess,
   logout,
@@ -33,9 +34,7 @@ describe("authSlice", () => {
 
   test("logout", () => {
     const loggedInState = authReducer(initialState, loginSuccess(mockUser));
-
     const state = authReducer(loggedInState, logout());
-
     expect(state.isAuthenticated).toBe(false);
     expect(state.user).toBeNull();
     expect(state.accessToken).toBeNull();
