@@ -60,7 +60,7 @@ test("401 response", async () => {
           message: "Invalid credential",
         },
         {
-          status: 400,
+          status: 401,
         },
       );
     }),
@@ -68,10 +68,34 @@ test("401 response", async () => {
 
   const result = await store.dispatch(
     authApi.endpoints.login.initiate({
-      username: "wrong",
-      password: "wrong",
+      username: "abc",
+      password: "123",
     }),
   );
 
   expect(result.error).toEqual(expect.objectContaining({ status: 401 }));
+});
+
+test("500 response", async () => {
+  server.use(
+    http.post("https://dummyjson.com/auth/login", () => {
+      return HttpResponse.json(
+        {
+          message: "Internal Server Error",
+        },
+        {
+          status: 500,
+        },
+      );
+    }),
+  );
+
+  const result = await store.dispatch(
+    authApi.endpoints.login.initiate({
+      username: "abc",
+      password: "123",
+    }),
+  );
+
+  expect(result.error).toEqual(expect.objectContaining({ status: 500 }));
 });
