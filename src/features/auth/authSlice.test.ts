@@ -42,7 +42,6 @@ describe("authSlice", () => {
 
   test("setLoading", () => {
     const state = authReducer(initialState, setLoading(true));
-
     expect(state.loading).toBe(true);
   });
 });

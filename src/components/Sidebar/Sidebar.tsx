@@ -10,8 +10,8 @@ const Sidebar = () => {
   });
 
   return (
-    <div className=" ">
-      <aside className="w-64 bg-red-200 h-screen p-4">
+    <div className="h-full">
+      <aside className="w-64 bg-red-200 h-full p-4 ">
         <nav className="flex flex-col">
           {sidebarItems.map((item) => {
             return (

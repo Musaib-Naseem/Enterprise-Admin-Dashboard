@@ -6,7 +6,7 @@ import NotFound from "../pages/NotFound";
 import Orders from "../pages/Orders";
 import Products from "../pages/Products";
 import Setting from "../pages/Setting";
-import Dashboard from "../pages/Dashboard";
+import Dashboard from "../pages/Dashboard/Dashboard";
 import Users from "../pages/Users";
 import ProtectedRoutes from "./ProtectedRoutes";
 import Unauthorised from "../pages/Unauthorised";
