@@ -6,11 +6,17 @@
 // import Input from "../../components/ui/Input/Input";
 // import Card from "../../components/ui/Card/Card";
 // import Badge from "../../components/ui/Badge/Badge";
-// import Spinnner from "../../components/ui/Spinner/Spinner";
+
 // import Modal from "../../components/ui/Modal/Modal";
 
 import KPISection from "./components/KPISections";
 import SummaryWidget from "./components/SummaryWidgets";
+import {
+  useGetCartsQuery,
+  useGetProductsQuery,
+  useGetUsersQuery,
+} from "../../services/api/dashboardApi";
+import Spinnner from "../../components/ui/Spinner/Spinner";
 
 const Dashboard = () => {
   // const data = useAppSelector((state) => state.auth.isAuthenticated);
@@ -21,11 +27,59 @@ const Dashboard = () => {
 
   // const showDeleteModal = false;
 
+  const userQuery = useGetUsersQuery();
+  const productQuery = useGetProductsQuery();
+  const cartQuery = useGetCartsQuery();
+
+  if (userQuery.isLoading || productQuery.isLoading || cartQuery.isLoading) {
+    return <Spinnner />;
+  }
+
+  if (userQuery.error || productQuery.error || cartQuery.error) {
+    return <p>Something went wrong</p>;
+  }
+
+  const revenue =
+    cartQuery.data?.carts.reduce((sum, cart) => sum + cart.total, 0) ?? 0;
+
+  const activeUsers = Math.floor(userQuery.data?.users.length ?? 0) * 0.7;
+
+  const kpiData = [
+    {
+      title: "Revenue",
+      value: `$${revenue}`,
+      growth: "+15%",
+    },
+
+    {
+      title: "Orders",
+      value: `${cartQuery.data?.carts.length ?? 0}`,
+      growth: "+7%",
+    },
+
+    {
+      title: "Users",
+      value: `${userQuery.data?.users.length ?? 0}`,
+      growth: "+11%",
+    },
+
+    {
+      title: "Active Users",
+      value: `${activeUsers}`,
+      growth: "+4%",
+    },
+  ];
+
   return (
     <div className="space-y-6 p-4">
-      <KPISection />
+      <KPISection kpiData={kpiData} />
 
-      <SummaryWidget />
+      <SummaryWidget
+        sales={cartQuery.data?.carts ?? []}
+        revenue={revenue}
+        activeUsers={activeUsers}
+        recentOrders={cartQuery.data?.carts.slice(0, 5) ?? []}
+      />
 
       {/* <Button variant="danger"> Cancel </Button>
       <Input label="Email" placeholder="Enter Email" />
